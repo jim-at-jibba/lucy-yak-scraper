@@ -34,7 +34,7 @@ func Scrape() {
 		var list []string
 		var currentPJCount = 6 // as of 07/12/22
 		fmt.Println("Product list found")
-		e.ForEach("li", func(i int, h *colly.HTMLElement) {
+		e.ForEach("li", func(_ int, h *colly.HTMLElement) {
 			list = append(list, h.ChildText(".card__heading"))
 		})
 
