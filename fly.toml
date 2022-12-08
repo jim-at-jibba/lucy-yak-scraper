@@ -1,4 +1,4 @@
-# fly.toml file generated for lucy-yak-scraper on 2022-12-08T05:18:29Z
+# fly.toml file generated for lucy-yak-scraper on 2022-12-08T10:54:46Z
 
 app = "lucy-yak-scraper"
 kill_signal = "SIGINT"

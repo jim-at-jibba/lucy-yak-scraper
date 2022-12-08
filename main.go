@@ -36,19 +36,19 @@ func Scrape() {
 		})
 
 		fmt.Printf("Count %d", len(list))
-		if len(list) > currentPJCount {
-			SendMsg("New PJs available")
+		if len(list) != currentPJCount {
+			SendMsg("New PJs available", os.Getenv("ELLA_PHONE_NUMBER"))
 		}
 	})
 
 	c.Visit("https://lucyandyak.com/collections/sleepwear")
 }
 
-func SendMsg(msg string) {
+func SendMsg(msg string, to string) {
 	client := twilio.NewRestClient()
 
 	params := &openapi.CreateMessageParams{}
-	params.SetTo(os.Getenv("TO_PHONE_NUMBER"))
+	params.SetTo(to)
 	params.SetFrom(os.Getenv("TWILIO_PHONE_NUMBER"))
 	params.SetBody(msg)
 
@@ -64,7 +64,7 @@ func runCronJob() {
 	s := gocron.NewScheduler(time.UTC)
 
 	s.Every(1).Day().At("10:30").Do(func() {
-		SendMsg("Starting the scraper")
+		SendMsg("Starting the scraper!", os.Getenv("TO_PHONE_NUMBER"))
 		Scrape()
 	})
 
