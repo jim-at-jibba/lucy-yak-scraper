@@ -3,16 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 
+	"github.com/go-co-op/gocron"
 	"github.com/gocolly/colly"
 	twilio "github.com/twilio/twilio-go"
 	openapi "github.com/twilio/twilio-go/rest/api/v2010"
 )
-
-func main() {
-	fmt.Println("Scraping")
-	Scrape()
-}
 
 // https://lucyandyak.com/collections/sleepwear
 func Scrape() {
@@ -61,4 +58,19 @@ func SendMsg(msg string) {
 	} else {
 		fmt.Println("SMS sent successfully!")
 	}
+}
+
+func runCronJob() {
+	s := gocron.NewScheduler(time.UTC)
+
+	s.Every(1).Day().At("10:30").Do(func() {
+		Scrape()
+	})
+
+	s.StartBlocking()
+}
+
+func main() {
+	fmt.Println("Scraping")
+	runCronJob()
 }
