@@ -72,5 +72,6 @@ func runCronJob() {
 
 func main() {
 	fmt.Println("Scraping")
+	SendMsg("Starting the scraper")
 	runCronJob()
 }
