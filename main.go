@@ -64,6 +64,7 @@ func runCronJob() {
 	s := gocron.NewScheduler(time.UTC)
 
 	s.Every(1).Day().At("10:30").Do(func() {
+		SendMsg("Starting the scraper")
 		Scrape()
 	})
 
@@ -72,6 +73,5 @@ func runCronJob() {
 
 func main() {
 	fmt.Println("Scraping")
-	SendMsg("Starting the scraper")
 	runCronJob()
 }
